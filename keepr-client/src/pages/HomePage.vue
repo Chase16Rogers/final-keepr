@@ -5,11 +5,18 @@
       <span class="mx-2 text-white">Vue 3 Starter</span>
     </h1>
   </div>
+  <button @click="account">
+    get account
+  </button>
 </template>
 
 <script>
+import { AccountService } from '../services/AccountService'
 export default {
-  name: 'Home'
+  name: 'Home',
+  account() {
+    AccountService.getAccount()
+  }
 }
 </script>
 

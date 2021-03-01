@@ -1,17 +1,69 @@
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using CodeWorks.Auth0Provider;
 using keepr.Models;
 using keepr.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class ProfilesController : ControllerBase
     {
-        
+        private readonly ProfilesService _PS;
+        private readonly KeepsService _KS;
+        private readonly VaultsService _VS;
+
+    public ProfilesController(ProfilesService pS, KeepsService kS, VaultsService vS)
+    {
+      _PS = pS;
+      _KS = kS;
+      _VS = vS;
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<Profile> Get(string id)
+    {
+        try
+        {
+            return Ok(_PS.GetOne(id)); 
+        }
+        catch (Exception err)
+        {
+            return BadRequest(err.Message);
+        }
+    }
+   
+   [HttpGet("{id}/keeps")]
+   public ActionResult<IEnumerable<Keep>> GetKeepsByProfile(string id)
+   {
+       try
+       {
+           return Ok(_KS.GetKeepsByProfile(id));
+       }
+       catch (System.Exception error)
+       {
+           return BadRequest(error.Message);
+       }
+   }
+
+   [HttpGet("{id}/vaults")]
+   public ActionResult<IEnumerable<Vault>> GetVaultsByProfile(string id)
+   {
+       try
+       {
+           return Ok(_VS.GetVaultsByProfile(id));
+       }
+       catch (System.Exception error)
+       {
+           return BadRequest(error.Message);
+       }
+   }
+
+
 
 
 

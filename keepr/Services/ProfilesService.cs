@@ -21,5 +21,15 @@ namespace keepr.Services
       }
       return profile;
     }
+
+    internal Profile GetOne(string id)
+    {
+      Profile found = _repo.GetOne(id);
+      if (found == null)
+      {
+        throw new Exception("Bad Id");
+      }
+      return found;
+    }
   }
 }

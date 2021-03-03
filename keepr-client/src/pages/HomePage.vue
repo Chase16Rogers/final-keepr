@@ -1,21 +1,41 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="container-fluid">
+    <div class="row mt-4">
+      <div class="col-11 mx-auto justify-content-center">
+        <div class="card-columns justify-content-center">
+          <keep-component v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+        </div>
+      </div>
+    </div>
   </div>
-  <button @click="account">
-    get account
-  </button>
 </template>
 
 <script>
+import { computed, onMounted, reactive } from 'vue'
+import { keepsService } from '../services/KeepsService'
+
 import { AccountService } from '../services/AccountService'
+import { logger } from '../utils/Logger'
+import { AppState } from '../AppState'
 export default {
   name: 'Home',
   account() {
     AccountService.getAccount()
+  },
+  setup() {
+    const state = reactive({
+      keeps: computed(() => AppState.keeps)
+    })
+    onMounted(async() => {
+      try {
+        await keepsService.getAll()
+      } catch (error) {
+        logger.error(error)
+      }
+    })
+    return {
+      state
+    }
   }
 }
 </script>
@@ -29,4 +49,5 @@ export default {
     width: 200px;
   }
 }
+
 </style>

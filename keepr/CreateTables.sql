@@ -1,4 +1,6 @@
 use datakeepr;
+-- DELETE FROM keeps;
+-- DELETE FROM vaults;
 -- CREATE TABLE profiles
 -- (
 --   id VARCHAR(255),

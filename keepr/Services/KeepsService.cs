@@ -31,7 +31,7 @@ namespace keepr.Services
         return found;
     }
 
-    internal IEnumerable<Keep> GetKeepsByVault(int id, Profile userInfo)
+    internal IEnumerable<KeepVaultViewModel> GetKeepsByVault(int id, Profile userInfo)
     {
         // Vault vaultCheck = _vRepo.GetOne(id);
         // if (vaultCheck.creatorId == userInfo.id)

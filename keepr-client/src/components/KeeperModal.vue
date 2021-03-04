@@ -53,10 +53,24 @@
                     </div>
                   </div>
                   <div class="row bottom-out">
-                    <div class="col-12 d-flex justify-content-between">
-                      <button class="btn btn-outline-info">
-                        Add to Vault ▾
-                      </button>
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                      <!-- drop -->
+                      <div class="dropdown">
+                        <button class="btn btn-outline-info dropdown-toggle"
+                                type="button"
+                                id="dropdownMenu2"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                @click="getVaults()"
+                        >
+                          Add to Vault
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <vault-drop-menu v-for="vault in state.userVaults" :key="vault.id" :userv-prop="vault" :add-keep="modalProp" />
+                        </div>
+                      </div>
+                      <!-- end drop -->
                       <i class="fa fa-trash-o fa-2x align-self-center" aria-hidden="true"></i>
                       <div class="d-flex align-items-center" @click="profileRoute(modalProp.creatorId)">
                         <img :src="modalProp.creator.picture" class="modal-user mobile-margin">
@@ -74,12 +88,14 @@
       </div>
     </div>
   </div>
+  <!-- ▲ -->
 </template>
-
 <script>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import $ from 'jquery'
+import { AppState } from '../AppState'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'KeeperModal',
   props: {
@@ -91,13 +107,18 @@ export default {
   setup() {
     const router = useRouter()
     const state = reactive({
-
+      userVaults: computed(() => AppState.usersVaults)
     })
     return {
       state,
       profileRoute(id) {
         $('*').modal('hide')
         router.push({ name: 'ProfilePage', params: { id: id } })
+      },
+      getVaults() {
+        if (AppState.usersVaults.length < 1) {
+          vaultsService.getUsersVaults()
+        }
       }
     }
   }
@@ -105,5 +126,7 @@ export default {
 </script>
 
 <style>
-
+p{
+  word-wrap: break-word;
+}
 </style>

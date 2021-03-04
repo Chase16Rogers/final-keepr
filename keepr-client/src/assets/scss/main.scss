@@ -36,7 +36,7 @@ background: linear-gradient(0deg, rgba(0,0,0,0.8547794117647058) 1%, rgba(255,25
 }
 .bigger-modal{
   min-height: 90vh;
-  min-width: 80vw;
+  min-width: 65vw;
 }
 .move-x{
   margin-right: -.6em;
@@ -82,4 +82,33 @@ border-radius: 20%;
   min-width: 10em;
   max-width: 10em;
   border-radius: 5%;
+}
+
+p{
+  margin-bottom: 0;
+}
+.taller-text-area{
+  min-height: 6.6em;
+}
+.hide-scroller::-webkit-scrollbar {
+  display: none;
+}
+.xsm-keep{
+  min-height: 20em;
+}
+.sm-keep{
+  min-height: 23em;
+}
+.md-keep{
+  min-height: 26em;
+}
+.lg-keep{
+  min-height: 29em;
+}
+.xlg-keep{
+  min-height: 32em;
+}
+.full-img{
+  min-height: 100%;
+  width: 100%;
 }

@@ -1,4 +1,8 @@
 use datakeepr;
+
+ALTER TABLE vaults
+ADD COLUMN img VARCHAR(255);
+
 -- DELETE FROM keeps;
 -- DELETE FROM vaults;
 -- CREATE TABLE profiles

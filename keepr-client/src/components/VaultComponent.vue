@@ -1,31 +1,29 @@
 <template>
-  <div @click="toggleModal(keepProp.id)" class="pointer">
+  <div @click="vaultRoute(vaultProp.id)" class="pointer">
     <div class="card bg-dark text-white" :class="state.height">
-      <img class="card-img" :class="state.height" :src="keepProp.img" :alt="keepProp.img">
+      <img class="card-img" :class="state.height" :src="vaultProp.img" :alt="vaultProp.img">
       <div class="card-img-overlay pb-2 d-flex align-items-end justify-content-between gradient">
         <h5 class="card-title mb-0">
-          {{ keepProp.name }}
+          {{ vaultProp.name }}
         </h5>
-        <router-link :to="{name: 'ProfilePage', params: {id: keepProp.creatorId}}">
-          <img :src="keepProp.creator.picture" class="userPic">
-        </router-link>
+        <img :src="vaultProp.creator.picture" class="userPic">
       </div>
     </div>
-    <keeper-modal :modal-prop="keepProp" />
   </div>
 </template>
 <script>
-import $ from 'jquery'
+import { useRouter } from 'vue-router'
 import { onMounted, reactive } from 'vue'
 export default {
-  name: 'KeepComponent',
+  name: 'VaultComponent',
   props: {
-    keepProp: {
+    vaultProp: {
       type: Object,
       required: true
     }
   },
   setup() {
+    const router = useRouter()
     const state = reactive({
       height: ''
     })
@@ -34,8 +32,8 @@ export default {
     })
     return {
       state,
-      toggleModal(id) {
-        setTimeout(() => $('#id' + id).modal('show'), 50)
+      vaultRoute(id) {
+        router.push({ name: 'VaultPage', params: { id: id } })
       },
       randomHeights() {
         const rnd = Math.floor(Math.random() * 10)
@@ -68,24 +66,5 @@ export default {
 </script>
 
 <style>
-.xsm-keep{
-  min-height: 20em;
-}
-.sm-keep{
-  min-height: 23em;
-}
-.md-keep{
-  min-height: 26em;
-}
-.lg-keep{
-  min-height: 29em;
-}
-.xlg-keep{
-  min-height: 32em;
-}
-.full-img{
-  min-height: 100%;
-  width: 100%;
-}
 
 </style>

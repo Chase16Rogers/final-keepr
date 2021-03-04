@@ -21,9 +21,16 @@
         <p class="mb-0 mr-2 bigP-text">
           Vaults
         </p>
-        <p class="mb-0 bigP-text">
+        <p class="mb-0 bigP-text pointer" data-toggle="modal" data-target="#createVault">
           +
         </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-11 mx-auto justify-content-center">
+        <div class="card-columns justify-content-center">
+          <vault-component v-for="vault in state.vaults" :key="vault.id" :vault-prop="vault" />
+        </div>
       </div>
     </div>
     <div class="row">
@@ -36,6 +43,14 @@
         </p>
       </div>
     </div>
+    <div class="row">
+      <div class="col-11 mx-auto justify-content-center">
+        <div class="card-columns justify-content-center">
+          <keep-component v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+        </div>
+      </div>
+    </div>
+    <create-vault />
     <create-keep />
   </div>
 </template>
@@ -47,6 +62,7 @@ import { profilesService } from '../services/ProfilesService'
 import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import $ from 'jquery'
 export default {
   name: 'ProfilePage',
@@ -64,7 +80,7 @@ export default {
         await vaultsService.getVaultsByProfile(route.params.id)
         await keepsService.getKeepsByProfile(route.params.id)
       } catch (error) {
-
+        logger.error(error)
       }
     })
     return {

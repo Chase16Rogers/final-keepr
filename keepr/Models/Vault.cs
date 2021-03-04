@@ -8,6 +8,7 @@ namespace keepr.Models
         public string description { get; set; }
         public bool isPrivate { get; set; }
         public Profile creator { get; set; }
+        public string img { get; set; }
     }
 
     public class VaultKeepViewModel : Vault

@@ -59,7 +59,7 @@ namespace keepr.Controllers
     }
 
     [HttpGet("{id}/keeps")]
-    public async Task<ActionResult<Vault>> GetKeepsByVault(int id)
+    public async Task<ActionResult<KeepVaultViewModel>> GetKeepsByVault(int id)
     {
         try
         {

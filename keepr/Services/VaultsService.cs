@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using keepr.Models;
 using keepr.Repositories;
 
@@ -41,9 +42,17 @@ namespace keepr.Services
         }
 
     }
-    internal IEnumerable<Vault> GetVaultsByProfile(string id)
+    internal IEnumerable<Vault> GetVaultsByProfile(string id, string userId)
     {
-      return _repo.GetVaultsByProfile(id);
+      IEnumerable<Vault> foundVaults = _repo.GetVaultsByProfile(id);
+      if (id == userId)
+      {
+          return foundVaults;
+      }
+      else
+      {
+          return foundVaults.Where(v=> v.isPrivate == false);
+      }
     }
 
     internal Vault Create(Vault newVault)

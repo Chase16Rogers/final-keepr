@@ -57,6 +57,18 @@ namespace keepr.Controllers
             return BadRequest(err.Message);
         }
     }
+    // [HttpGet("{id}/bypass")]
+    // public ActionResult<Vault> GetOne(int id)
+    // {
+    //     try
+    //     {
+    //         return Ok(_VS.GetOnebypass(id));
+    //     }
+    //     catch (Exception err)
+    //     {
+    //         return BadRequest(err.Message);
+    //     }
+    // }
 
     [HttpGet("{id}/keeps")]
     public async Task<ActionResult<KeepVaultViewModel>> GetKeepsByVault(int id)

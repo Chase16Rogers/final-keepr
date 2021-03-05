@@ -69,17 +69,32 @@ namespace keepr.Services
         }
         found.name = editKeep.name == null ? found.name : editKeep.name;
         found.description = editKeep.description == null ? found.description : editKeep.description;
-        found.keeps = editKeep.keeps > 0 ? editKeep.keeps : found.keeps;
+        // found.keeps = editKeep.keeps > 0 ? editKeep.keeps : found.keeps;
+        // found.views = editKeep.views > found.views ? found.views + 1 : found.views;
+        // found.shares = editKeep.shares > found.shares ? found.shares + 1 : found.shares;
+        editKeep.id = id;
+        editKeep.creatorId = found.creatorId;
+        return _repo.Edit(found);
+    }
+    
+        internal Keep UnEdit(int id, Keep editKeep)
+    {
+        Keep found = GetOne(id);
+        if (found == null)
+        {
+            throw new Exception("Invalid Id");
+        }
+        found.keeps = editKeep.keeps > found.keeps ? found.keeps + 1 : found.keeps;
         found.views = editKeep.views > found.views ? found.views + 1 : found.views;
         found.shares = editKeep.shares > found.shares ? found.shares + 1 : found.shares;
         editKeep.id = id;
         editKeep.creatorId = found.creatorId;
-        return _repo.Edit(editKeep);
+        return _repo.UnEdit(found);
     }
 
     internal object Delete(int id, string userId)
     {
-         Keep found = GetOne(id);
+        Keep found = GetOne(id);
         if (found == null)
         {
             throw new Exception("Invalid Id");

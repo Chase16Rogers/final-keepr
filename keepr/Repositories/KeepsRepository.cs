@@ -56,8 +56,8 @@ namespace keepr.Repositories
        string sql = @"
        SELECT
        k.*,
-       p.*,
-       vk.id as vaultKeepId
+       vk.id AS vaultKeepId,
+       p.*
        FROM vaultkeeps vk
        JOIN keeps k on k.id = vk.keepId
        JOIN profiles p ON k.creatorId = p.id
@@ -83,7 +83,19 @@ namespace keepr.Repositories
        string sql = @"
        UPDATE keeps
        SET
-       name = @name, creatorId = @creatorId, description = @description, img = @img, views = @views, shares = @shares, keeps = @keeps, id = @id, creatorId = @creatorId
+       name = @name, description = @description, img = @img, views = @views, shares = @shares, keeps = @keeps, id = @id, creatorId = @creatorId
+       WHERE id = @id;
+       ";
+       _db.Execute(sql, editKeep);
+       return editKeep;
+    }
+
+    internal Keep UnEdit(Keep editKeep)
+    {
+       string sql = @"
+       UPDATE keeps
+       SET
+       views = @views, shares = @shares, keeps = @keeps, id = @id, creatorId = @creatorId
        WHERE id = @id;
        ";
        _db.Execute(sql, editKeep);

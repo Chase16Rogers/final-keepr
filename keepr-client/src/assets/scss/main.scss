@@ -40,6 +40,7 @@ background: linear-gradient(0deg, rgba(0,0,0,0.8547794117647058) 1%, rgba(255,25
 }
 .move-x{
   margin-right: -.6em;
+  color: var(--danger) ;
 }
 .pointer:hover{
   cursor: pointer;
@@ -65,7 +66,7 @@ border-radius: 20%;
   margin-bottom: 5em;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1300px) {
   .hide-mobile {
     display: none;
   }
@@ -111,4 +112,53 @@ p{
 .full-img{
   min-height: 100%;
   width: 100%;
+}
+.trash-style:hover{
+  color: var(--danger) !important;
+}
+p{
+  word-wrap: break-word;
+}
+.max-drop{
+max-height: 20em;
+}
+.overflow {
+  overflow-y: scroll;
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+.back-grey{
+  background-color: #2D3436;
+}
+.cust-border{
+border-style: solid;
+border-width: 10px;
+border-color: #2D3436;
+color: #2D3436;
+}
+
+.text-info{
+  text-shadow: 0px 1px 2px black;
+}
+
+.hefty-info{
+  font-weight: 6000;
+}
+.card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+  @include media-breakpoint-only(sm) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(md) {
+    column-count: 5;
+  }
+  @include media-breakpoint-only(xs) {
+    column-count: 2;
+  }
 }

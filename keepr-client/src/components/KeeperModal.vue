@@ -19,19 +19,19 @@
                   <div class="row">
                     <div class="d-flex justify-content-around mx-auto">
                       <div class="d-flex align-items-center justify-content-between">
-                        <i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                        <i class="fa text-info fa-eye mr-2" aria-hidden="true"></i>
                         <p class="mb-0">
                           {{ modalProp.views }}
                         </p>
                       </div>
                       <div class="d-flex align-items-center justify-content-between mx-3">
-                        <i class="fa fa-thumb-tack mr-2" aria-hidden="true"></i>
+                        <i class="fa text-info fa-thumb-tack mr-2" aria-hidden="true"></i>
                         <p class="mb-0">
                           {{ modalProp.keeps }}
                         </p>
                       </div>
                       <div class="d-flex align-items-center justify-content-between">
-                        <i class="fa fa-share-alt mr-2" aria-hidden="true"></i>
+                        <i class="fa text-info fa-share-alt mr-2" aria-hidden="true"></i>
                         <p class="mb-0">
                           {{ modalProp.shares }}
                         </p>
@@ -55,8 +55,8 @@
                   <div class="row bottom-out">
                     <div class="col-12 d-flex justify-content-between align-items-center">
                       <!-- drop -->
-                      <div class="dropdown">
-                        <button class="btn btn-outline-info dropdown-toggle"
+                      <div class="dropdown" v-if="pageProp.page != 'vault'">
+                        <button class="btn btn-outline-info dropdown-toggle hefty-info"
                                 type="button"
                                 id="dropdownMenu2"
                                 data-toggle="dropdown"
@@ -66,12 +66,18 @@
                         >
                           Add to Vault
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <div class="dropdown-menu max-drop overflow hide-scroll shadow-sm" aria-labelledby="dropdownMenu2">
                           <vault-drop-menu v-for="vault in state.userVaults" :key="vault.id" :userv-prop="vault" :add-keep="modalProp" />
+                          <a class="dropdown-item disabled" href="#" v-if="!state.account">Login ☺</a>
                         </div>
                       </div>
+                      <button class="btn btn-outline-info" v-if="pageProp.page == 'vault' && state.account.id == state.activeVault.creatorId" @click="removeKeepFromVault()">
+                        Remove from Vault
+                      </button>
                       <!-- end drop -->
-                      <i class="fa fa-trash-o fa-2x align-self-center" aria-hidden="true"></i>
+                      <div v-if="state.account.id === modalProp.creatorId">
+                        <confirm-delete :delete-prop="{id: modalProp.id, dataType: 'keep'}" />
+                      </div>
                       <div class="d-flex align-items-center" @click="profileRoute(modalProp.creatorId)">
                         <img :src="modalProp.creator.picture" class="modal-user mobile-margin">
                         <p class="mb-0 hide-mobile">
@@ -88,26 +94,34 @@
       </div>
     </div>
   </div>
-  <!-- ▲ -->
 </template>
 <script>
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import $ from 'jquery'
 import { AppState } from '../AppState'
 import { vaultsService } from '../services/VaultsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 export default {
   name: 'KeeperModal',
   props: {
     modalProp: {
       type: Object,
       required: true
+    },
+    pageProp: {
+      type: Object,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     const router = useRouter()
     const state = reactive({
-      userVaults: computed(() => AppState.usersVaults)
+      userVaults: computed(() => AppState.usersVaults),
+      account: computed(() => AppState.account),
+      activeVault: computed(() => AppState.activeVault)
+    })
+    onMounted(() => {
     })
     return {
       state,
@@ -119,6 +133,10 @@ export default {
         if (AppState.usersVaults.length < 1) {
           vaultsService.getUsersVaults()
         }
+      },
+      removeKeepFromVault() {
+        $('*').modal('hide')
+        vaultKeepsService.deleteVaultKeep(props.modalProp.vaultKeepId)
       }
     }
   }
@@ -126,7 +144,5 @@ export default {
 </script>
 
 <style>
-p{
-  word-wrap: break-word;
-}
+
 </style>

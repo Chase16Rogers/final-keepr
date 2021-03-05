@@ -7,6 +7,9 @@
 <script>
 import { reactive } from 'vue'
 import { vaultKeepsService } from '../services/VaultKeepsService'
+import { useRouter } from 'vue-router'
+import $ from 'jquery'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'VaultDropMenu',
   props: {
@@ -20,13 +23,17 @@ export default {
     }
   },
   setup(props) {
+    const router = useRouter()
     const state = reactive({
 
     })
     return {
       state,
-      chosenVault() {
-        vaultKeepsService.createVaultKeep(props.uservProp.id, props.addKeep.id)
+      async chosenVault() {
+        await vaultKeepsService.createVaultKeep(props.uservProp.id, props.addKeep.id)
+        $('*').modal('hide')
+        router.push({ name: 'VaultPage', params: { id: props.uservProp.id } })
+        await keepsService.addKeepCount(props.addKeep.id)
       }
     }
   }

@@ -1,12 +1,15 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
+        <router-link :to="{ name: 'Home' }" class="nav-link">
+          <img
+            alt="logo"
+            src="../assets/img/klogo.png"
+            height="45"
+            class="logo-bigger shadow-sm ml-3"
+          />
+        </router-link>
       </div>
     </router-link>
     <button
@@ -22,27 +25,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
-          </router-link>
-        </li>
       </ul>
       <span class="navbar-text">
         <button
-          class="btn btn-outline-primary text-uppercase"
+          class="btn btn-outline-secondary text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
         >
           Login
         </button>
 
-        <div class="dropdown" v-else>
+        <div class="dropdown pointer rounded shadow-sm back-grey p-2 mr-5" v-else>
           <div
             class="dropdown-toggle"
             @click="state.dropOpen = !state.dropOpen"
@@ -51,16 +44,16 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded pointer"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <span class="mx-3 pointer">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <router-link :to="{ name: 'Account' }">
+            <router-link :to="{ name: 'ProfilePage', params: { id: state.account.id }}">
               <div class="list-group-item list-group-item-action hoverable">
                 Account
               </div>
@@ -86,7 +79,8 @@ export default {
   name: 'Navbar',
   setup() {
     const state = reactive({
-      dropOpen: false
+      dropOpen: false,
+      account: computed(() => AppState.account)
     })
     return {
       state,
@@ -123,5 +117,8 @@ a:hover {
 }
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
+}
+.logo-bigger{
+  min-height: 3em;
 }
 </style>

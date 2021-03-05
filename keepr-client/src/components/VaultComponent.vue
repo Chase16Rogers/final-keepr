@@ -6,7 +6,6 @@
         <h5 class="card-title mb-0">
           {{ vaultProp.name }}
         </h5>
-        <img :src="vaultProp.creator.picture" class="userPic">
       </div>
     </div>
   </div>
@@ -28,7 +27,6 @@ export default {
       height: ''
     })
     onMounted(() => {
-
     })
     return {
       state,

@@ -4,15 +4,7 @@ import { api } from './AxiosService'
 class VaultsService {
   async getVaultsByProfile(id) {
     const res = await api.get('api/profiles/' + id + '/vaults')
-    const vaultArr = res.data
-    const resArr = res.data
-    vaultArr.forEach(v => {
-      if (v.isPrivate && AppState.profile.id !== AppState.account.id) {
-        const index = resArr.findIndex(r => r.id === v.id)
-        resArr.splice(index, 1)
-      }
-    })
-    AppState.vaults = resArr
+    AppState.vaults = res.data
   }
 
   async getUsersVaults() {
@@ -29,6 +21,12 @@ class VaultsService {
   async createVault(data) {
     const res = await api.post('api/vaults', data)
     AppState.vaults.push(res.data)
+  }
+
+  async deleteVault(id) {
+    await api.delete('api/vaults/' + id)
+    const index = AppState.vaults.findIndex(v => v.id === id)
+    AppState.vaults.splice(index, 1)
   }
 }
 export const vaultsService = new VaultsService()

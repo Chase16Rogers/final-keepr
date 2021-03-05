@@ -37,8 +37,7 @@ namespace keepr.Services
         }
         else 
         {
-        Vault rtn = found;
-        return rtn; 
+        return found; 
         }
 
     }
@@ -80,6 +79,8 @@ namespace keepr.Services
         editVault.id = id;
         return _repo.Edit(editVault);
     }
+
+
 
     internal object Delete(int id, string userId)
     {

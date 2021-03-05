@@ -74,6 +74,20 @@ namespace keepr.Controllers
             return BadRequest(err.Message);
         }
     }
+    
+    [HttpPut("{id}/update")]
+    public ActionResult<Keep> UnEdit(int id, [FromBody] Keep editKeep)
+    {
+        try
+        {
+            return Ok(_KS.UnEdit(id, editKeep));
+        }
+        catch (Exception err)
+        {
+            return BadRequest(err.Message);
+        }
+    }
+
     [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<string>> DeleteAsync(int id)

@@ -3,7 +3,7 @@
     <div class="row mt-4">
       <div class="col-11 mx-auto justify-content-center">
         <div class="card-columns justify-content-center">
-          <keep-component v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+          <keep-component v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" :page-prop="{page: 'home'}" />
         </div>
       </div>
     </div>

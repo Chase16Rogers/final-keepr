@@ -1,41 +1,66 @@
 <template>
-  <div @click="toggleModal(keepProp.id)" class="pointer">
-    <div class="card bg-dark text-white" :class="state.height">
+  <div>
+    <div class="card bg-dark shadow text-white pointer mb-3 stroke
+    "
+         :class="state.height"
+         @click="toggleModal(keepProp.id)"
+    >
       <img class="card-img" :class="state.height" :src="keepProp.img" :alt="keepProp.img">
       <div class="card-img-overlay pb-2 d-flex align-items-end justify-content-between gradient">
         <h5 class="card-title mb-0">
           {{ keepProp.name }}
         </h5>
-        <router-link :to="{name: 'ProfilePage', params: {id: keepProp.creatorId}}">
-          <img :src="keepProp.creator.picture" class="userPic">
-        </router-link>
+        <img :src="keepProp.creator.picture" class="userPic z-up stroke" @click="goToProfile()" v-if="pageProp.page !== 'profile' ">
       </div>
     </div>
-    <keeper-modal :modal-prop="keepProp" />
+    <keeper-modal :modal-prop="keepProp" :page-prop="pageProp" />
   </div>
 </template>
 <script>
 import $ from 'jquery'
 import { onMounted, reactive } from 'vue'
+import { keepsService } from '../services/KeepsService'
+import { logger } from '../utils/Logger'
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'KeepComponent',
   props: {
     keepProp: {
       type: Object,
       required: true
+    },
+    pageProp: {
+      type: Object,
+      required: true
     }
   },
-  setup() {
+  beforeMount() {
+    this.randomHeights()
+  },
+  setup(props) {
+    const router = useRouter()
     const state = reactive({
       height: ''
     })
-    onMounted(() => {
 
+    onMounted(() => {
     })
     return {
       state,
-      toggleModal(id) {
-        setTimeout(() => $('#id' + id).modal('show'), 50)
+      async toggleModal(id) {
+        try {
+          keepsService.addKeepView(id)
+          $('#id' + id).modal('show')
+          // setTimeout(() => $('#id' + id).modal('show'), 80)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      goToProfile() {
+        $('*').modal('hide')
+        setTimeout(() => $('*').modal('hide'), 50)
+        router.push({ name: 'ProfilePage', params: { id: props.keepProp.creatorId } })
       },
       randomHeights() {
         const rnd = Math.floor(Math.random() * 10)
@@ -68,24 +93,10 @@ export default {
 </script>
 
 <style>
-.xsm-keep{
-  min-height: 20em;
+.z-up{
+  z-index: 20;
 }
-.sm-keep{
-  min-height: 23em;
+.stroke{
+  pointer-events: Stroke;
 }
-.md-keep{
-  min-height: 26em;
-}
-.lg-keep{
-  min-height: 29em;
-}
-.xlg-keep{
-  min-height: 32em;
-}
-.full-img{
-  min-height: 100%;
-  width: 100%;
-}
-
 </style>

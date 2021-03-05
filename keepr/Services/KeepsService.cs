@@ -33,16 +33,16 @@ namespace keepr.Services
 
     internal IEnumerable<KeepVaultViewModel> GetKeepsByVault(int id, Profile userInfo)
     {
-        // Vault vaultCheck = _vRepo.GetOne(id);
-        // if (vaultCheck.creatorId == userInfo.id)
-        // {
+        Vault vaultCheck = _vRepo.GetOne(id);
+        if (vaultCheck.creatorId == userInfo.id)
+        {
         return _repo.GetKeepsByVault(id);
-        // }
-        // if (vaultCheck.isPrivate)
-        // {
-        //     throw new UnauthorizedAccessException("No");
-        // }
-        // return _repo.GetKeepsByVault(id);
+        }
+        if (vaultCheck.isPrivate)
+        {
+            throw new UnauthorizedAccessException("No");
+        }
+        return _repo.GetKeepsByVault(id);
     }
 
     internal IEnumerable<Keep> GetKeepsByProfile(string id)

@@ -56,7 +56,7 @@
                     <div class="col-12 d-flex justify-content-between align-items-center">
                       <!-- drop -->
                       <div class="dropdown" v-if="pageProp.page != 'vault'">
-                        <button class="btn btn-outline-info dropdown-toggle hefty-info"
+                        <button class="btn btn-outline-info dropdown-toggle hefty-info pointer"
                                 type="button"
                                 id="dropdownMenu2"
                                 data-toggle="dropdown"
@@ -68,17 +68,17 @@
                         </button>
                         <div class="dropdown-menu max-drop overflow hide-scroll shadow-sm" aria-labelledby="dropdownMenu2">
                           <vault-drop-menu v-for="vault in state.userVaults" :key="vault.id" :userv-prop="vault" :add-keep="modalProp" />
-                          <a class="dropdown-item disabled" href="#" v-if="!state.account">Login ☺</a>
+                          <a class="dropdown-item disabled" href="#" v-if="!state.account.id">Login ☺</a>
                         </div>
                       </div>
-                      <button class="btn btn-outline-info" v-if="pageProp.page == 'vault' && state.account.id == state.activeVault.creatorId" @click="removeKeepFromVault()">
+                      <button class="btn btn-outline-info pointer" v-if="pageProp.page == 'vault' && state.account.id == state.activeVault.creatorId" @click="removeKeepFromVault()">
                         Remove from Vault
                       </button>
                       <!-- end drop -->
                       <div v-if="state.account.id === modalProp.creatorId">
                         <confirm-delete :delete-prop="{id: modalProp.id, dataType: 'keep'}" />
                       </div>
-                      <div class="d-flex align-items-center" @click="profileRoute(modalProp.creatorId)">
+                      <div class="d-flex align-items-center pointer" @click="profileRoute(modalProp.creatorId)">
                         <img :src="modalProp.creator.picture" class="modal-user mobile-margin">
                         <p class="mb-0 hide-mobile">
                           {{ modalProp.creator.name }}

@@ -42,8 +42,12 @@ background: linear-gradient(0deg, rgba(0,0,0,0.8547794117647058) 1%, rgba(255,25
   margin-right: -.6em;
   color: var(--danger) ;
 }
+.pointer{
+  transition: all .2s ease-in-out;
+}
 .pointer:hover{
   cursor: pointer;
+  transform: scale(1.03);
 }
 .big-text{
   font-size: 2em;

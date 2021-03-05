@@ -26,7 +26,7 @@
                   <p>Image URL</p>
                   <input class="form-control mb-3" type="text" placeholder="URL..." v-model="state.newVault.img" required>
                   <div class="d-flex align-items-center">
-                    <input type="checkbox" aria-label="Checkbox" v-model="state.newVault.isPrivate" class="mr-2">
+                    <input type="checkbox" aria-label="Checkbox" v-model="state.newVault.isPrivate" class="mr-2 pointer">
                     <p>Private?</p>
                   </div>
                   <p>Private Vaults can only be seen by you</p>

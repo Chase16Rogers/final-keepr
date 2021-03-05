@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="nav-space">
     <Navbar />
   </header>
   <main>
@@ -34,4 +34,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
+.nav-space{
+height: 102px;
+}
 </style>

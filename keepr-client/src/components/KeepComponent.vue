@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card bg-dark shadow text-white pointer mb-3 stroke
+    <div class="card bg-dark shadow text-white pointer mb-3
     "
          :class="state.height"
          @click="toggleModal(keepProp.id)"
@@ -10,7 +10,7 @@
         <h5 class="card-title mb-0">
           {{ keepProp.name }}
         </h5>
-        <img :src="keepProp.creator.picture" class="userPic z-up stroke" @click="goToProfile()" v-if="pageProp.page !== 'profile' ">
+        <img :src="keepProp.creator.picture" class="userPic" @click="goToProfile()" v-if="pageProp.page !== 'profile' ">
       </div>
     </div>
     <keeper-modal :modal-prop="keepProp" :page-prop="pageProp" />
@@ -51,15 +51,14 @@ export default {
       async toggleModal(id) {
         try {
           keepsService.addKeepView(id)
-          $('#id' + id).modal('show')
-          // setTimeout(() => $('#id' + id).modal('show'), 80)
+          const open = setTimeout(() => $('#id' + id).modal('show'), 30)
+          console.log(open)
         } catch (error) {
           logger.error(error)
         }
       },
       goToProfile() {
-        $('*').modal('hide')
-        setTimeout(() => $('*').modal('hide'), 50)
+        clearTimeout(open)
         router.push({ name: 'ProfilePage', params: { id: props.keepProp.creatorId } })
       },
       randomHeights() {
@@ -93,10 +92,5 @@ export default {
 </script>
 
 <style>
-.z-up{
-  z-index: 20;
-}
-.stroke{
-  pointer-events: Stroke;
-}
+
 </style>

@@ -39,6 +39,9 @@ export default {
       logger.error(error)
     }
   },
+  beforeMount() {
+    AppState.keeps = []
+  },
   setup() {
     const route = useRoute()
     const state = reactive({

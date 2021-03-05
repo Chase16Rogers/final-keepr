@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <nav class="navbar navbar-expand-lg shadow navbar-dark bg-info moving-nav">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <router-link :to="{ name: 'Home' }" class="nav-link">
@@ -7,7 +7,7 @@
             alt="logo"
             src="../assets/img/klogo.png"
             height="45"
-            class="logo-bigger shadow-sm ml-3"
+            class="logo-bigger pointer shadow-sm ml-3"
           />
         </router-link>
       </div>
@@ -28,7 +28,7 @@
       </ul>
       <span class="navbar-text">
         <button
-          class="btn btn-outline-secondary text-uppercase"
+          class="btn btn-outline-secondary text-uppercase mr-5 pointer"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -120,5 +120,13 @@ a:hover {
 }
 .logo-bigger{
   min-height: 3em;
+}
+
+.moving-nav{
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 5;
+  box-shadow: 1px, 2px, 10px, 10px black;
 }
 </style>

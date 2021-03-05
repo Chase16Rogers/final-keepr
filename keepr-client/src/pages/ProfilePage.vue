@@ -1,17 +1,17 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3 d-flex justify-content-center mt-5">
+      <div class="col-md-3 col-sm-12 d-flex justify-content-center mt-5">
         <img :src="state.profile.picture" class="img-fluid bigger-user">
       </div>
-      <div class="col-9 mt-4">
-        <p class="mb-0 bigP-text">
+      <div class="col-md-9 col-sm-12 mt-4">
+        <p class="mb-0 bigP-text mobile-header">
           {{ state.profile.name }}
         </p>
-        <p class="big-text mb-0">
+        <p class="big-text mobile-header mb-0">
           Vaults: {{ state.vaults.length }}
         </p>
-        <p class="big-text">
+        <p class="big-text mobile-header">
           Keeps: {{ state.keeps.length }}
         </p>
       </div>
@@ -66,10 +66,8 @@ import { logger } from '../utils/Logger'
 import $ from 'jquery'
 export default {
   name: 'ProfilePage',
-  beforeUpdate() {
-    $('*').modal('hide')
-  },
-  updated() {
+  beforeMount() {
+    AppState.keeps = []
     $('*').modal('hide')
   },
   setup() {
@@ -81,8 +79,6 @@ export default {
       account: computed(() => AppState.account)
     })
     onMounted(async() => {
-      $('*').modal('hide')
-      setTimeout(() => $('*').modal('hide'), 2000)
       try {
         await profilesService.getProfileById(route.params.id)
         await vaultsService.getVaultsByProfile(route.params.id)
@@ -99,5 +95,10 @@ export default {
 </script>
 
 <style>
-
+@media screen and (max-width: 600px) {
+  .mobile-header {
+    font-size: 2em;
+    text-align: center;
+  }
+}
 </style>
